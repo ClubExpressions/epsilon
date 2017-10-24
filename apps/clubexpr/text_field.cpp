@@ -8,17 +8,40 @@ TextField::TextField(Responder * parentResponder, char * textBuffer, size_t text
   setEditing(true);
 }
 
+bool isDigit(char c) {
+  if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' ||
+      c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {
+    return true;
+  }
+  return false;
+}
+
 bool TextField::handleEvent(Ion::Events::Event event) {
   // TODO: internationalisation and accents on Carré and Opposé
   if (event == Ion::Events::Back) {
     return false;
   }
   if (event == Ion::Events::Backspace) {
-    deleteCharPrecedingCursor();
-    while ((cursorLocation() > 0) &&
-           (text()[cursorLocation()-1] != '(') &&
-           (text()[cursorLocation()-1] != ')') &&
-           (text()[cursorLocation()-1] != ' ')) {
+    // This is a quite special handling of Backspace!
+    // We try to eat as many chars as possible to speed up editing.
+    // pv is the previous char
+    char pv = text()[cursorLocation()-1];
+    if (isDigit(pv) || pv == '(' || pv == ')') {
+      // We delete digits and parens one char by one char:
+      deleteCharPrecedingCursor();
+      return true;
+    } else if (pv == ' ') {
+      // Before this space, there could be more to delete.
+      deleteCharPrecedingCursor();
+      bool running = true;
+      while (cursorLocation() > 0 && running) {
+          pv = text()[cursorLocation()-1];
+          if (isDigit(pv) || pv == ' ' || pv == ')') {
+            running = false;
+          }
+          if (running) deleteCharPrecedingCursor();
+      }
+    } else {
       deleteCharPrecedingCursor();
     }
     return true;
