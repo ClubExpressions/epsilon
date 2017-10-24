@@ -95,7 +95,37 @@ bool TextField::handleEvent(Ion::Events::Event event) {
     setCursorLocation(cursorLocation() + (pciap?6:7));
     return true;
   }
-  // Pi Imaginary Exp Ln Log Cosine Sine Tangent
+  // Other
+  if (event == Ion::Events::Exp) {
+    insertTextAtLocation(pciap?"exp ":"(exp ", cursorLocation());
+    setCursorLocation(cursorLocation() + (pciap?4:5));
+    return true;
+  }
+  if (event == Ion::Events::Ln) {
+    insertTextAtLocation(pciap?"ln ":"(ln ", cursorLocation());
+    setCursorLocation(cursorLocation() + (pciap?3:4));
+    return true;
+  }
+  if (event == Ion::Events::Log) {
+    insertTextAtLocation(pciap?"log ":"(log ", cursorLocation());
+    setCursorLocation(cursorLocation() + (pciap?4:5));
+    return true;
+  }
+  if (event == Ion::Events::Cosine) {
+    insertTextAtLocation(pciap?"cos ":"(cos ", cursorLocation());
+    setCursorLocation(cursorLocation() + (pciap?4:5));
+    return true;
+  }
+  if (event == Ion::Events::Sine) {
+    insertTextAtLocation(pciap?"sin ":"(sin ", cursorLocation());
+    setCursorLocation(cursorLocation() + (pciap?4:5));
+    return true;
+  }
+  if (event == Ion::Events::Tangent) {
+    insertTextAtLocation(pciap?"tan ":"(tan ", cursorLocation());
+    setCursorLocation(cursorLocation() + (pciap?4:5));
+    return true;
+  }
   return(::TextField::handleEvent(event));
 }
 
