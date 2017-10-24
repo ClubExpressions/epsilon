@@ -1,14 +1,14 @@
 #include "selectable_table_view.h"
 
-namespace Calculation {
+namespace ClubExpr {
 
-CalculationSelectableTableView::CalculationSelectableTableView(Responder * parentResponder, TableViewDataSource * dataSource,
+ClubExprSelectableTableView::ClubExprSelectableTableView(Responder * parentResponder, TableViewDataSource * dataSource,
  SelectableTableViewDataSource * selectionDataSource, SelectableTableViewDelegate * delegate) :
   ::SelectableTableView(parentResponder, dataSource, 0, 0, 0, 0, 0, 0, selectionDataSource, delegate, false)
 {
 }
 
-void CalculationSelectableTableView::scrollToCell(int i, int j) {
+void ClubExprSelectableTableView::scrollToCell(int i, int j) {
   ::SelectableTableView::scrollToCell(i, j);
   if (m_contentView.bounds().height() < bounds().height()) {
     m_topMargin = bounds().height() - m_contentView.bounds().height();
@@ -35,11 +35,11 @@ void CalculationSelectableTableView::scrollToCell(int i, int j) {
   }
 }
 
-void CalculationSelectableTableView::scrollToSubviewOfTypeOfCellAtLocation(HistoryViewCell::SubviewType subviewType, int i, int j) {
+void ClubExprSelectableTableView::scrollToSubviewOfTypeOfCellAtLocation(HistoryViewCell::SubviewType subviewType, int i, int j) {
   if (dataSource()->rowHeight(j) <= bounds().height()) {
     return;
   }
-  /* As we scroll, the selected calculation does not use the same history view
+  /* As we scroll, the selected clubexpr does not use the same history view
    * cell, thus, we want to deselect the previous used history view cell. */
   if (selectedRow() >= 0) {
     HighlightCell * previousCell = selectedCell();
@@ -57,7 +57,7 @@ void CalculationSelectableTableView::scrollToSubviewOfTypeOfCellAtLocation(Histo
   }
   /* For the same reason, we have to rehighlight the new history view cell and
    * inform the delegate which history view cell is highlighted even if the
-   * selected calculation has not changed. */
+   * selected clubexpr has not changed. */
   setContentOffset(KDPoint(contentOffsetX, contentOffsetY));
   HighlightCell * cell = cellAtLocation(i, j);
   cell->setHighlighted(true);

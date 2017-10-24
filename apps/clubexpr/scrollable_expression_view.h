@@ -1,9 +1,9 @@
-#ifndef CALCULATION_SCROLLABLE_EXPRESSION_VIEW_H
-#define CALCULATION_SCROLLABLE_EXPRESSION_VIEW_H
+#ifndef CLUBEXPR_SCROLLABLE_EXPRESSION_VIEW_H
+#define CLUBEXPR_SCROLLABLE_EXPRESSION_VIEW_H
 
 #include <escher.h>
 
-namespace Calculation {
+namespace ClubExpr {
 
 class ScrollableExpressionView : public ScrollableView, public ScrollViewDataSource {
 public:

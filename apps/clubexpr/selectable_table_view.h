@@ -1,13 +1,13 @@
-#ifndef CALCULATION_SELECTABLE_TABLE_VIEW_H
-#define CALCULATION_SELECTABLE_TABLE_VIEW_H
+#ifndef CLUBEXPR_SELECTABLE_TABLE_VIEW_H
+#define CLUBEXPR_SELECTABLE_TABLE_VIEW_H
 
 #include <escher.h>
 #include "history_view_cell.h"
-namespace Calculation {
+namespace ClubExpr {
 
-class CalculationSelectableTableView : public ::SelectableTableView {
+class ClubExprSelectableTableView : public ::SelectableTableView {
 public:
-  CalculationSelectableTableView(Responder * parentResponder, TableViewDataSource * dataSource,
+  ClubExprSelectableTableView(Responder * parentResponder, TableViewDataSource * dataSource,
     SelectableTableViewDataSource * selectionDataSource, SelectableTableViewDelegate * delegate = nullptr);
   void scrollToCell(int i, int j) override;
   void scrollToSubviewOfTypeOfCellAtLocation(HistoryViewCell::SubviewType subviewType, int i, int j);

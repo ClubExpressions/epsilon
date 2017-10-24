@@ -1,24 +1,24 @@
 #include "app.h"
 #include "../apps_container.h"
-#include "calculation_icon.h"
+#include "clubexpr_icon.h"
 #include "../i18n.h"
 
 using namespace Poincare;
 
 using namespace Shared;
 
-namespace Calculation {
+namespace ClubExpr {
 
 I18n::Message App::Descriptor::name() {
-  return I18n::Message::CalculApp;
+  return I18n::Message::ClubExprApp;
 }
 
 I18n::Message App::Descriptor::upperName() {
-  return I18n::Message::CalculAppCapital;
+  return I18n::Message::ClubExprAppCapital;
 }
 
 const Image * App::Descriptor::icon() {
-  return ImageStore::CalculationIcon;
+  return ImageStore::ClubexprIcon;  // e instead of E because of Inliner
 }
 
 App * App::Snapshot::unpack(Container * container) {
@@ -26,7 +26,7 @@ App * App::Snapshot::unpack(Container * container) {
 }
 
 void App::Snapshot::reset() {
-  m_calculationStore.deleteAll();
+  m_clubexprStore.deleteAll();
 }
 
 App::Descriptor * App::Snapshot::descriptor() {
@@ -34,19 +34,19 @@ App::Descriptor * App::Snapshot::descriptor() {
   return &descriptor;
 }
 
-CalculationStore * App::Snapshot::calculationStore() {
-  return &m_calculationStore;
+ClubExprStore * App::Snapshot::clubexprStore() {
+  return &m_clubexprStore;
 }
 
 void App::Snapshot::tidy() {
-  m_calculationStore.tidy();
+  m_clubexprStore.tidy();
 }
 
 App::App(Container * container, Snapshot * snapshot) :
   TextFieldDelegateApp(container, snapshot, &m_editExpressionController),
-  m_localContext((GlobalContext *)((AppsContainer *)container)->globalContext(), snapshot->calculationStore()),
-  m_historyController(&m_editExpressionController, snapshot->calculationStore()),
-  m_editExpressionController(&m_modalViewController, &m_historyController, snapshot->calculationStore())
+  m_localContext((GlobalContext *)((AppsContainer *)container)->globalContext(), snapshot->clubexprStore()),
+  m_historyController(&m_editExpressionController, snapshot->clubexprStore()),
+  m_editExpressionController(&m_modalViewController, &m_historyController, snapshot->clubexprStore())
 {
 }
 

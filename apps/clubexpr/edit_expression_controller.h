@@ -1,19 +1,19 @@
-#ifndef CALCULATION_EDIT_EXPRESSION_CONTROLLER_H
-#define CALCULATION_EDIT_EXPRESSION_CONTROLLER_H
+#ifndef CLUBEXPR_EDIT_EXPRESSION_CONTROLLER_H
+#define CLUBEXPR_EDIT_EXPRESSION_CONTROLLER_H
 
 #include <escher.h>
 #include "../shared/text_field_delegate.h"
 #include "history_controller.h"
-#include "calculation_store.h"
+#include "clubexpr_store.h"
 #include "text_field.h"
 
-namespace Calculation {
+namespace ClubExpr {
 class HistoryController;
 
 /* TODO: implement a split view */
 class EditExpressionController : public DynamicViewController, public Shared::TextFieldDelegate {
 public:
-  EditExpressionController(Responder * parentResponder, HistoryController * historyController, CalculationStore * calculationStore);
+  EditExpressionController(Responder * parentResponder, HistoryController * historyController, ClubExprStore * clubexprStore);
   void didBecomeFirstResponder() override;
   void viewDidDisappear() override;
   bool handleEvent(Ion::Events::Event event) override;
@@ -44,7 +44,7 @@ private:
   void unloadView(View * view) override;
   Shared::TextFieldDelegateApp * textFieldDelegateApp() override;
   HistoryController * m_historyController;
-  CalculationStore * m_calculationStore;
+  ClubExprStore * m_clubexprStore;
 };
 
 }

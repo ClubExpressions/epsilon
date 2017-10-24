@@ -1,19 +1,19 @@
-#ifndef CALCULATION_LOCAL_CONTEXT_H
-#define CALCULATION_LOCAL_CONTEXT_H
+#ifndef CLUBEXPR_LOCAL_CONTEXT_H
+#define CLUBEXPR_LOCAL_CONTEXT_H
 
 #include <poincare.h>
-#include "calculation_store.h"
+#include "clubexpr_store.h"
 
-namespace Calculation {
+namespace ClubExpr {
 
 class LocalContext : public Poincare::Context {
 public:
-  LocalContext(Poincare::GlobalContext * parentContext, CalculationStore * calculationStore);
+  LocalContext(Poincare::GlobalContext * parentContext, ClubExprStore * clubexprStore);
   void setExpressionForSymbolName(Poincare::Expression * expression, const Poincare::Symbol * symbol) override;
   const Poincare::Expression * expressionForSymbol(const Poincare::Symbol * symbol) override;
 private:
   Poincare::Evaluation<double> * ansValue();
-  CalculationStore * m_calculationStore;
+  ClubExprStore * m_clubexprStore;
   Poincare::GlobalContext * m_parentContext;
 };
 

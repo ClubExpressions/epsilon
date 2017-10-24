@@ -1,20 +1,20 @@
-#ifndef CALCULATION_CALCULATION_H
-#define CALCULATION_CALCULATION_H
+#ifndef CLUBEXPR_CLUBEXPR_H
+#define CLUBEXPR_CLUBEXPR_H
 
 #include <escher.h>
 #include <poincare.h>
 
-namespace Calculation {
+namespace ClubExpr {
 
-class Calculation {
+class ClubExpr {
 public:
-  Calculation();
-  ~Calculation(); // Delete expression and layout, if needed
-  Calculation& operator=(const Calculation& other);
-  Calculation(const Calculation& other) = delete;
-  Calculation(Calculation&& other) = delete;
-  Calculation& operator=(Calculation&& other) = delete;
-  /* c.reset() is the equivalent of c = Calculation() without copy assingment. */
+  ClubExpr();
+  ~ClubExpr(); // Delete expression and layout, if needed
+  ClubExpr& operator=(const ClubExpr& other);
+  ClubExpr(const ClubExpr& other) = delete;
+  ClubExpr(ClubExpr&& other) = delete;
+  ClubExpr& operator=(ClubExpr&& other) = delete;
+  /* c.reset() is the equivalent of c = ClubExpr() without copy assingment. */
   void reset();
   const char * inputText();
   const char * outputText();

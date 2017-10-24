@@ -1,11 +1,11 @@
-#include "calculation.h"
+#include "clubexpr.h"
 #include <string.h>
 #include <cmath>
 using namespace Poincare;
 
-namespace Calculation {
+namespace ClubExpr {
 
-Calculation::Calculation() :
+ClubExpr::ClubExpr() :
   m_inputText(),
   m_outputText(),
   m_input(nullptr),
@@ -15,7 +15,7 @@ Calculation::Calculation() :
 {
 }
 
-Calculation::~Calculation() {
+ClubExpr::~ClubExpr() {
   if (m_inputLayout != nullptr) {
     delete m_inputLayout;
     m_inputLayout = nullptr;
@@ -34,7 +34,7 @@ Calculation::~Calculation() {
   }
 }
 
-Calculation& Calculation::operator=(const Calculation& other) {
+ClubExpr& ClubExpr::operator=(const ClubExpr& other) {
   const char * otherInputText = other.m_inputText;
   const char * otherOutputText = other.m_outputText;
   reset();
@@ -43,13 +43,13 @@ Calculation& Calculation::operator=(const Calculation& other) {
   return *this;
 }
 
-void Calculation::reset() {
+void ClubExpr::reset() {
   m_inputText[0] = 0;
   m_outputText[0] = 0;
   tidy();
 }
 
-void Calculation::setContent(const char * c, Context * context) {
+void ClubExpr::setContent(const char * c, Context * context) {
   reset();
   strlcpy(m_inputText, c, sizeof(m_inputText));
   Evaluation<double> * evaluation = input()->evaluate<double>(*context);
@@ -57,29 +57,29 @@ void Calculation::setContent(const char * c, Context * context) {
   delete evaluation;
 }
 
-const char * Calculation::inputText() {
+const char * ClubExpr::inputText() {
   return m_inputText;
 }
 
-const char * Calculation::outputText() {
+const char * ClubExpr::outputText() {
   return m_outputText;
 }
 
-Expression * Calculation::input() {
+Expression * ClubExpr::input() {
   if (m_input == nullptr) {
     m_input = Expression::parse(m_inputText);
   }
   return m_input;
 }
 
-ExpressionLayout * Calculation::inputLayout() {
+ExpressionLayout * ClubExpr::inputLayout() {
   if (m_inputLayout == nullptr && input() != nullptr) {
     m_inputLayout = input()->createLayout(Expression::FloatDisplayMode::Decimal, Expression::ComplexFormat::Cartesian);
   }
   return m_inputLayout;
 }
 
-Evaluation<double> * Calculation::output(Context * context) {
+Evaluation<double> * ClubExpr::output(Context * context) {
   if (m_output == nullptr) {
     /* To ensure that the expression 'm_output' is a matrix or a complex, we
      * call 'evaluate'. */
@@ -94,14 +94,14 @@ Evaluation<double> * Calculation::output(Context * context) {
   return m_output;
 }
 
-ExpressionLayout * Calculation::outputLayout(Context * context) {
+ExpressionLayout * ClubExpr::outputLayout(Context * context) {
   if (m_outputLayout == nullptr && output(context) != nullptr) {
     m_outputLayout = output(context)->createLayout();
   }
   return m_outputLayout;
 }
 
-bool Calculation::isEmpty() {
+bool ClubExpr::isEmpty() {
   /* To test if a calculation is empty, we need to test either m_inputText or
    * m_outputText, the only two fields that are not lazy-loaded. We choose
    * m_outputText to consider that a calculation being added is still empty
@@ -114,7 +114,7 @@ bool Calculation::isEmpty() {
   return false;
 }
 
-void Calculation::tidy() {
+void ClubExpr::tidy() {
   if (m_input != nullptr) {
     delete m_input;
   }

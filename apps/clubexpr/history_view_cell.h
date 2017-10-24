@@ -1,11 +1,11 @@
-#ifndef CALCULATION_HISTORY_VIEW_CELL_H
-#define CALCULATION_HISTORY_VIEW_CELL_H
+#ifndef CLUBEXPR_HISTORY_VIEW_CELL_H
+#define CLUBEXPR_HISTORY_VIEW_CELL_H
 
 #include <escher.h>
-#include "calculation.h"
+#include "clubexpr.h"
 #include "scrollable_expression_view.h"
 
-namespace Calculation {
+namespace ClubExpr {
 
 class HistoryViewCell : public ::EvenOddCell, public Responder {
 public:
@@ -16,7 +16,7 @@ public:
   HistoryViewCell(Responder * parentResponder);
   void reloadCell() override;
   KDColor backgroundColor() const override;
-  void setCalculation(Calculation * calculation);
+  void setClubExpr(ClubExpr * clubexpr);
   int numberOfSubviews() const override;
   View * subviewAtIndex(int index) override;
   void layoutSubviews() override;

@@ -2,7 +2,7 @@
 #include <assert.h>
 using namespace Poincare;
 
-namespace Calculation {
+namespace ClubExpr {
 
 ScrollableExpressionView::ScrollableExpressionView(Responder * parentResponder) :
   ScrollableView(parentResponder, &m_expressionView, this),

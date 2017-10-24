@@ -5,7 +5,7 @@
 
 using namespace Shared;
 
-namespace Calculation {
+namespace ClubExpr {
 
 EditExpressionController::ContentView::ContentView(Responder * parentResponder, TableView * subview, TextFieldDelegate * textFieldDelegate) :
   View(),
@@ -46,10 +46,10 @@ TableView * EditExpressionController::ContentView::mainView() {
   return m_mainView;
 }
 
-EditExpressionController::EditExpressionController(Responder * parentResponder, HistoryController * historyController, CalculationStore * calculationStore) :
+EditExpressionController::EditExpressionController(Responder * parentResponder, HistoryController * historyController, ClubExprStore * clubexprStore) :
   DynamicViewController(parentResponder),
   m_historyController(historyController),
-  m_calculationStore(calculationStore)
+  m_clubexprStore(clubexprStore)
 {
 }
 
@@ -66,7 +66,7 @@ void EditExpressionController::insertTextBody(const char * text) {
 
 bool EditExpressionController::handleEvent(Ion::Events::Event event) {
   if (event == Ion::Events::Up) {
-    if (m_calculationStore->numberOfCalculations() > 0) {
+    if (m_clubexprStore->numberOfClubExprs() > 0) {
       ((ContentView *)view())->textField()->setEditing(false, false);
       app()->setFirstResponder(m_historyController);
     }
@@ -76,17 +76,17 @@ bool EditExpressionController::handleEvent(Ion::Events::Event event) {
 }
 
 void EditExpressionController::didBecomeFirstResponder() {
-  int lastRow = m_calculationStore->numberOfCalculations() > 0 ? m_calculationStore->numberOfCalculations()-1 : 0;
+  int lastRow = m_clubexprStore->numberOfClubExprs() > 0 ? m_clubexprStore->numberOfClubExprs()-1 : 0;
   m_historyController->scrollToCell(0, lastRow);
   ((ContentView *)view())->textField()->setEditing(true, false);
   app()->setFirstResponder(((ContentView *)view())->textField());
 }
 
 bool EditExpressionController::textFieldDidReceiveEvent(::TextField * textField, Ion::Events::Event event) {
-  if (textField->textFieldShouldFinishEditing(event) && textField->isEditing() && strlen(textField->text()) == 0 && m_calculationStore->numberOfCalculations() > 0) {
-    App * calculationApp = (App *)app();
-    const char * lastTextBody = m_calculationStore->calculationAtIndex(m_calculationStore->numberOfCalculations()-1)->inputText();
-    m_calculationStore->push(lastTextBody, calculationApp->localContext());
+  if (textField->textFieldShouldFinishEditing(event) && textField->isEditing() && strlen(textField->text()) == 0 && m_clubexprStore->numberOfClubExprs() > 0) {
+    App * clubexprApp = (App *)app();
+    const char * lastTextBody = m_clubexprStore->clubexprAtIndex(m_clubexprStore->numberOfClubExprs()-1)->inputText();
+    m_clubexprStore->push(lastTextBody, clubexprApp->localContext());
     m_historyController->reload();
     ((ContentView *)view())->mainView()->scrollToCell(0, m_historyController->numberOfRows()-1);
     return true;
@@ -95,8 +95,8 @@ bool EditExpressionController::textFieldDidReceiveEvent(::TextField * textField,
 }
 
 bool EditExpressionController::textFieldDidFinishEditing(::TextField * textField, const char * text, Ion::Events::Event event) {
-  App * calculationApp = (App *)app();
-  m_calculationStore->push(textBody(), calculationApp->localContext());
+  App * clubexprApp = (App *)app();
+  m_clubexprStore->push(textBody(), clubexprApp->localContext());
   m_historyController->reload();
   ((ContentView *)view())->mainView()->scrollToCell(0, m_historyController->numberOfRows()-1);
   ((ContentView *)view())->textField()->setEditing(true);

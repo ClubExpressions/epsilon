@@ -1,5 +1,5 @@
-#ifndef CALCULATION_TEXT_FIELD_H
-#define CALCULATION_TEXT_FIELD_H
+#ifndef CLUBEXPR_TEXT_FIELD_H
+#define CLUBEXPR_TEXT_FIELD_H
 
 #include <escher.h>
 

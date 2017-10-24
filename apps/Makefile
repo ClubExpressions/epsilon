@@ -11,6 +11,7 @@ snapshots =
 # the $snapshots variable (name of the snapshot class) and the $snapshot_headers
 # (path to the snapshot header).
 include apps/calculation/Makefile
+include apps/clubexpr/Makefile
 include apps/graph/Makefile
 include apps/sequence/Makefile
 include apps/settings/Makefile
