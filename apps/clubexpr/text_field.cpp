@@ -1,6 +1,6 @@
 #include "text_field.h"
 
-namespace Calculation {
+namespace ClubExpr {
 
 TextField::TextField(Responder * parentResponder, char * textBuffer, size_t textBufferSize, TextFieldDelegate * delegate) :
   ::TextField(parentResponder, textBuffer, textBuffer, textBufferSize, delegate, false)

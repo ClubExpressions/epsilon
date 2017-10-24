@@ -3,12 +3,12 @@
 #include "../apps_container.h"
 #include <assert.h>
 
-namespace Calculation {
+namespace ClubExpr {
 
-HistoryController::HistoryController(Responder * parentResponder, CalculationStore * calculationStore) :
+HistoryController::HistoryController(Responder * parentResponder, ClubExprStore * clubexprStore) :
   DynamicViewController(parentResponder),
-  m_calculationHistory{},
-  m_calculationStore(calculationStore)
+  m_clubexprHistory{},
+  m_clubexprStore(clubexprStore)
 {
 }
 
@@ -43,11 +43,11 @@ bool HistoryController::handleEvent(Ion::Events::Event event) {
     EditExpressionController * editController = (EditExpressionController *)parentResponder();
     selectableTableView()->deselectTable();
     app()->setFirstResponder(editController);
-    Calculation * calculation = m_calculationStore->calculationAtIndex(focusRow);
+    ClubExpr * clubexpr = m_clubexprStore->clubexprAtIndex(focusRow);
     if (subviewType == HistoryViewCell::SubviewType::Input) {
-      editController->insertTextBody(calculation->inputText());
+      editController->insertTextBody(clubexpr->inputText());
     } else {
-      editController->insertTextBody(calculation->outputText());
+      editController->insertTextBody(clubexpr->outputText());
     }
     return true;
   }
@@ -57,7 +57,7 @@ bool HistoryController::handleEvent(Ion::Events::Event event) {
     HistoryViewCell::SubviewType subviewType = selectedCell->selectedSubviewType();
     selectableTableView()->deselectTable();
     EditExpressionController * editController = (EditExpressionController *)parentResponder();
-    m_calculationStore->deleteCalculationAtIndex(focusRow);
+    m_clubexprStore->deleteClubExprAtIndex(focusRow);
     reload();
     if (numberOfRows()== 0) {
       app()->setFirstResponder(editController);
@@ -78,7 +78,7 @@ bool HistoryController::handleEvent(Ion::Events::Event event) {
   }
   if (event == Ion::Events::Clear) {
     selectableTableView()->deselectTable();
-    m_calculationStore->deleteAll();
+    m_clubexprStore->deleteAll();
     reload();
     app()->setFirstResponder(parentResponder());
     return true;
@@ -93,11 +93,11 @@ bool HistoryController::handleEvent(Ion::Events::Event event) {
     HistoryViewCell * selectedCell = (HistoryViewCell *)selectableTableView()->selectedCell();
     HistoryViewCell::SubviewType subviewType = selectedCell->selectedSubviewType();
     int focusRow = selectedRow();
-    Calculation * calculation = m_calculationStore->calculationAtIndex(focusRow);
+    ClubExpr * clubexpr = m_clubexprStore->clubexprAtIndex(focusRow);
     if (subviewType == HistoryViewCell::SubviewType::Input) {
-      Clipboard::sharedClipboard()->store(calculation->inputText());
+      Clipboard::sharedClipboard()->store(clubexpr->inputText());
     } else {
-      Clipboard::sharedClipboard()->store(calculation->outputText());
+      Clipboard::sharedClipboard()->store(clubexpr->outputText());
     }
     return true;
   }
@@ -123,14 +123,14 @@ void HistoryController::tableViewDidChangeSelection(SelectableTableView * t, int
 }
 
 int HistoryController::numberOfRows() {
-  return m_calculationStore->numberOfCalculations();
+  return m_clubexprStore->numberOfClubExprs();
 };
 
 HighlightCell * HistoryController::reusableCell(int index, int type) {
   assert(type == 0);
   assert(index >= 0);
   assert(index < k_maxNumberOfDisplayedRows);
-  return m_calculationHistory[index];
+  return m_clubexprHistory[index];
 }
 
 int HistoryController::reusableCellCount(int type) {
@@ -140,18 +140,18 @@ int HistoryController::reusableCellCount(int type) {
 
 void HistoryController::willDisplayCellForIndex(HighlightCell * cell, int index) {
   HistoryViewCell * myCell = (HistoryViewCell *)cell;
-  myCell->setCalculation(m_calculationStore->calculationAtIndex(index));
+  myCell->setClubExpr(m_clubexprStore->clubexprAtIndex(index));
   myCell->setEven(index%2 == 0);
 }
 
 KDCoordinate HistoryController::rowHeight(int j) {
-  if (j >= m_calculationStore->numberOfCalculations()) {
+  if (j >= m_clubexprStore->numberOfClubExprs()) {
     return 0;
   }
-  Calculation * calculation = m_calculationStore->calculationAtIndex(j);
-  KDCoordinate inputHeight = calculation->inputLayout()->size().height();
-  App * calculationApp = (App *)app();
-  KDCoordinate outputHeight = calculation->outputLayout(calculationApp->localContext())->size().height();
+  ClubExpr * clubexpr = m_clubexprStore->clubexprAtIndex(j);
+  KDCoordinate inputHeight = clubexpr->inputLayout()->size().height();
+  App * clubexprApp = (App *)app();
+  KDCoordinate outputHeight = clubexpr->outputLayout(clubexprApp->localContext())->size().height();
   return inputHeight + outputHeight + 3*HistoryViewCell::k_digitVerticalMargin;
 }
 
@@ -180,22 +180,22 @@ void HistoryController::scrollToCell(int i, int j) {
   selectableTableView()->scrollToCell(i, j);
 }
 
-CalculationSelectableTableView * HistoryController::selectableTableView() {
-  return (CalculationSelectableTableView *)view();
+ClubExprSelectableTableView * HistoryController::selectableTableView() {
+  return (ClubExprSelectableTableView *)view();
 }
 
 View * HistoryController::loadView() {
-  CalculationSelectableTableView * tableView = new CalculationSelectableTableView(this, this, this, this);
+  ClubExprSelectableTableView * tableView = new ClubExprSelectableTableView(this, this, this, this);
 for (int i = 0; i < k_maxNumberOfDisplayedRows; i++) {
-    m_calculationHistory[i] = new HistoryViewCell(tableView);
+    m_clubexprHistory[i] = new HistoryViewCell(tableView);
   }
   return tableView;
 }
 
 void HistoryController::unloadView(View * view) {
   for (int i = 0; i < k_maxNumberOfDisplayedRows; i++) {
-    delete m_calculationHistory[i];
-    m_calculationHistory[i] = nullptr;
+    delete m_clubexprHistory[i];
+    m_clubexprHistory[i] = nullptr;
   }
   delete view;
 }

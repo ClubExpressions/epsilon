@@ -3,7 +3,7 @@
 
 #include <escher.h>
 
-namespace Calculation {
+namespace ClubExpr {
 
 class TextField : public ::TextField {
 public:

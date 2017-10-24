@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <string.h>
 
-namespace Calculation {
+namespace ClubExpr {
 
 HistoryViewCell::HistoryViewCell(Responder * parentResponder) :
   Responder(parentResponder),
@@ -47,10 +47,10 @@ void HistoryViewCell::layoutSubviews() {
   }
 }
 
-void HistoryViewCell::setCalculation(Calculation * calculation) {
-  m_inputView.setExpression(calculation->inputLayout());
-  App * calculationApp = (App *)app();
-  m_outputView.setExpression(calculation->outputLayout(calculationApp->localContext()));
+void HistoryViewCell::setClubExpr(ClubExpr * clubexpr) {
+  m_inputView.setExpression(clubexpr->inputLayout());
+  App * clubexprApp = (App *)app();
+  m_outputView.setExpression(clubexpr->outputLayout(clubexprApp->localContext()));
 }
 
 void HistoryViewCell::reloadCell() {
@@ -89,7 +89,7 @@ bool HistoryViewCell::handleEvent(Ion::Events::Event event) {
   if ((event == Ion::Events::Down && m_selectedSubviewType == SubviewType::Input) ||
     (event == Ion::Events::Up && m_selectedSubviewType == SubviewType::Output)) {
     SubviewType otherSubviewType = m_selectedSubviewType == SubviewType::Input ? SubviewType::Output : SubviewType::Input;
-    CalculationSelectableTableView * tableView = (CalculationSelectableTableView *)parentResponder();
+    ClubExprSelectableTableView * tableView = (ClubExprSelectableTableView *)parentResponder();
     tableView->scrollToSubviewOfTypeOfCellAtLocation(otherSubviewType, tableView->selectedColumn(), tableView->selectedRow());
     HistoryViewCell * selectedCell = (HistoryViewCell *)(tableView->selectedCell());
     selectedCell->setSelectedSubviewType(otherSubviewType);
