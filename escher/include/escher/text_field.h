@@ -19,6 +19,7 @@ public:
   int textLength() const;
   int cursorLocation() const;
   void setText(const char * text);
+  void deleteCharPrecedingCursor();
   void setBackgroundColor(KDColor backgroundColor);
   KDColor backgroundColor() const;
   void setTextColor(KDColor textColor);
@@ -90,7 +91,6 @@ protected:
   };
   ContentView m_contentView;
 private:
-  void deleteCharPrecedingCursor();
   bool deleteEndOfLine();
   void scrollToCursor();
   bool m_hasTwoBuffers;
